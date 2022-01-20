@@ -33,3 +33,6 @@ urlpatterns = [
     path('coffees/', include('coffees.urls')),
     path('admin/', admin.site.urls),
 ]
+
+handler403 = 'utils.error_handlers.permission_denied'
+handler404 = 'utils.error_handlers.page_not_found'

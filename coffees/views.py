@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
@@ -8,16 +9,20 @@ from .models import Coffee
 
 
 # Create your views here.
+@login_required
 def index(request):
     coffees = Coffee.objects.all()
     return render(request, 'coffees/index.html', {'coffees': coffees})
 
 
+@login_required
 def show(request, pk):
     coffee = get_object_or_404(Coffee, pk=pk)
     return render(request, 'coffees/show.html', {'coffee': coffee})
 
 
+@login_required
+@permission_required('coffees.add_coffee', raise_exception=True)
 def add(request):
     form = CoffeeForm(request.POST or None)
     if form.is_valid():
@@ -27,6 +32,8 @@ def add(request):
     return render(request, 'coffees/add.html', {'form': form})
 
 
+@login_required
+@permission_required('coffees.edit_coffee', raise_exception=True)
 def edit(request, pk):
     coffee = get_object_or_404(Coffee, pk=pk)
     form = CoffeeForm(request.POST or None, instance=coffee)
@@ -37,6 +44,8 @@ def edit(request, pk):
     return render(request, 'coffees/edit.html', {'form': form})
 
 
+@login_required
+@permission_required('coffees.delete_coffee', raise_exception=True)
 def delete(request, pk):
     coffee = get_object_or_404(Coffee, pk=pk)
     form = DeleteConfirmForm(request.POST or None)
