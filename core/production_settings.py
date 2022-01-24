@@ -5,7 +5,7 @@ import dj_database_url
 from .settings import *
 
 DEBUG = False
-ALLOWED_HOSTS = ['coffee-shopp.herokuapp.com']
+ALLOWED_HOSTS = ['djangocoffeeshop.herokuapp.com']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 DATABASES = {
